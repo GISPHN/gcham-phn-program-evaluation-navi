@@ -102,14 +102,14 @@ function exampleCell(item, category) {
   }
   const categoryCss = categoryClass[item.category] || "category-structure";
   const added = planItems.some((planItem) => planItem.sourceId === item.id || (!planItem.sourceId && planItem.id === item.id));
-  const buttonText = added ? "追加済み" : "評価案に追加";
+  const buttonText = added ? "評価案から外す" : "評価案に追加";
   const buttonClass = added ? "button-secondary" : "button-primary";
   return '<td class="example-cell" data-label="' + escapeHtml(category) + '">' +
     '<div class="cell-category"><span class="category-badge ' + categoryCss + '">' + escapeHtml(category) + '</span></div>' +
     '<p class="indicator-text">' + escapeHtml(item.indicator) + '</p>' +
     '<div class="cell-sources"><span>出典</span> ' + citationLinks(item) + '</div>' +
     '<div class="cell-actions"><button class="button ' + buttonClass + ' add-to-plan" data-id="' + escapeHtml(item.id) +
-    '" type="button" ' + (added ? "disabled" : "") + '>' + buttonText + '</button>' + sourceDetails(item) + '</div></td>';
+    '" type="button" aria-pressed="' + String(added) + '">' + buttonText + '</button>' + sourceDetails(item) + '</div></td>';
 }
 
 function renderMatrix() {
@@ -253,9 +253,12 @@ function exportPlan() {
   window.setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
-function addExampleToPlan(example) {
-  if (planItems.some((planItem) => planItem.sourceId === example.id || (!planItem.sourceId && planItem.id === example.id))) return;
-  planItems.push({
+function toggleExampleInPlan(example) {
+  const existingIndex = planItems.findIndex((planItem) => planItem.sourceId === example.id || (!planItem.sourceId && planItem.id === example.id));
+  if (existingIndex >= 0) {
+    planItems.splice(existingIndex, 1);
+  } else {
+    planItems.push({
     id: example.id,
     sourceId: example.id,
     kind: "example",
@@ -270,7 +273,8 @@ function addExampleToPlan(example) {
     actualValue: "",
     interpretation: "",
     nextAction: ""
-  });
+    });
+  }
   savePlan();
   renderPlan();
   renderMatrix();
@@ -305,7 +309,7 @@ resultRows.addEventListener("click", (event) => {
   const button = event.target.closest(".add-to-plan");
   if (!button) return;
   const item = evaluationExamples.find((example) => example.id === button.dataset.id);
-  if (item) addExampleToPlan(item);
+  if (item) toggleExampleInPlan(item);
 });
 
 customFormToggle.addEventListener("click", () => {
@@ -330,14 +334,14 @@ customForm.addEventListener("submit", (event) => {
     domain,
     category,
     indicatorName: String(formData.get("indicatorName") || "").trim(),
-    targetPeriod: "",
-    definition: "",
-    numeratorDenominator: "",
-    dataAndTiming: "",
-    targetValue: "",
-    actualValue: "",
-    interpretation: "",
-    nextAction: ""
+    targetPeriod: String(formData.get("targetPeriod") || "").trim(),
+    definition: String(formData.get("definition") || "").trim(),
+    numeratorDenominator: String(formData.get("numeratorDenominator") || "").trim(),
+    dataAndTiming: String(formData.get("dataAndTiming") || "").trim(),
+    targetValue: String(formData.get("targetValue") || "").trim(),
+    actualValue: String(formData.get("actualValue") || "").trim(),
+    interpretation: String(formData.get("interpretation") || "").trim(),
+    nextAction: String(formData.get("nextAction") || "").trim()
   });
 
   customForm.reset();
