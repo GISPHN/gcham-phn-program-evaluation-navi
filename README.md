@@ -40,7 +40,3 @@ python -m http.server 8000
 
 - [デジタル庁デザインシステム](https://design.digital.go.jp/dads/)
 - [BIZ UDPゴシック（Google Fonts）](https://fonts.google.com/specimen/BIZ+UDPGothic)
-
-## GitHub Pagesで公開する場合
-
-GitHubのリポジトリ設定で、Pagesの公開元に `main` ブランチと `/ (root)` を指定します。このリポジトリはビルド手順を必要としない静的サイトです。
