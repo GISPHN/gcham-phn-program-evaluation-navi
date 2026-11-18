@@ -84,7 +84,7 @@ input::placeholder, textarea::placeholder { color: #66717c; opacity: 1; }
 .table-hint { margin: .2rem 0 .55rem; color: var(--muted); font-size: .85rem; }
 .empty-state { margin-top: .75rem; padding: 1.2rem; background: white; border: 1px dashed #65727e; }
 
-.matrix-scroll { overflow: auto; max-height: 76vh; background: white; border: 1px solid #aab6c0; border-radius: 6px; }
+.matrix-scroll { overflow: auto; max-height: none; background: white; border: 1px solid #aab6c0; border-radius: 6px; }
 .evaluation-matrix { width: 100%; min-width: 1320px; border-collapse: separate; border-spacing: 0; table-layout: fixed; }
 .evaluation-matrix thead { position: sticky; z-index: 3; top: 0; }
 .evaluation-matrix th, .evaluation-matrix td { border-right: 1px solid #cbd3da; border-bottom: 1px solid #cbd3da; }
