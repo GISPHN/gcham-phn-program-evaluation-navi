@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#123b5d">
-    <meta name="description" content="行政保健師が公的資料に基づく評価指標例を検索し、担当事業の評価計画を組み立てるためのナビゲーションサイトです。">
+    <meta name="description" content="行政保健師が公的資料に基づく評価指標例を一覧で確認し、自分の事業の評価と改善につなげるためのサイトです。">
     <title>G-CHAM 保健師事業評価ナビ</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,9 +22,9 @@
           <span class="brand-name">G-CHAM <span>保健師事業評価ナビ</span></span>
         </a>
         <nav class="top-nav" aria-label="ページ内ナビゲーション">
-          <a href="#search">評価例を探す</a>
-          <a href="#my-plan">事業評価案</a>
-          <a href="#about">このサイトについて</a>
+          <a href="#search">評価例一覧</a>
+          <a href="#my-plan">自分の評価案</a>
+          <a href="#about">使い方</a>
         </nav>
       </div>
     </header>
@@ -34,26 +34,26 @@
         <div class="hero-inner">
           <p class="eyebrow">公的資料に基づく評価例から、担当事業の改善へ</p>
           <h1 id="page-title">保健師事業評価ナビ</h1>
-          <p class="hero-copy">事業の領域や評価の視点から具体例を探し、目標・指標・データを整理して、自分の事業の評価計画につなげます。</p>
-          <a class="button button-light" href="#search">評価例を検索する</a>
+          <p class="hero-copy">まず全体を見て、近い評価例を選ぶ。自分の指標も登録して、評価結果を次の改善につなげられます。</p>
+          <a class="button button-light" href="#search">68件の評価例を見る</a>
         </div>
       </section>
 
       <div class="page-wrap">
         <section class="notice" aria-label="利用上の注意">
           <span class="notice-label">利用上の注意</span>
-          <p>ここに掲載する指標は、事業を考えるための参考例です。自治体の計画、対象者、データ、事業目的に合わせて定義してください。原典の指標と、本サイトで4区分に整理した例は区別して表示します。</p>
+          <p>掲載例は事業を考えるための参考です。自治体の計画、対象者、データ、事業目的に合わせて指標を定義してください。原典の指標と、事業向けに整理・補足した例は出典欄で区別しています。</p>
         </section>
 
         <section id="search" class="search-section" aria-labelledby="search-title">
           <div class="section-heading">
-            <p class="eyebrow">SEARCH EXAMPLES</p>
-            <h2 id="search-title">評価例を探す</h2>
-            <p>キーワードと条件を組み合わせて検索できます。</p>
+            <p class="eyebrow">EVALUATION EXAMPLES</p>
+            <h2 id="search-title">評価例を一覧で見る</h2>
+            <p>17領域・4つの評価区分を一覧にしました。気になる語句で絞り込み、出典を確認できます。</p>
           </div>
 
-          <div class="search-layout">
-            <aside class="filter-panel" aria-label="検索条件">
+          <div class="filter-panel" aria-label="評価例の検索条件">
+            <div class="filter-grid">
               <div class="field-group">
                 <label for="query">キーワード</label>
                 <input id="query" type="search" placeholder="例：産後、受診率、連携" autocomplete="off">
@@ -72,37 +72,74 @@
                   <option value="アウトカム">アウトカム</option>
                 </select>
               </div>
-              <div class="filter-actions">
-                <button class="button button-secondary" id="clear-filters" type="button">条件をクリア</button>
-              </div>
-              <p class="filter-hint">評価区分に迷ったときは、何を確かめたい指標なのかを考えます。</p>
-            </aside>
-
-            <div class="results-panel">
-              <div class="results-toolbar">
-                <p id="result-count" class="result-count" aria-live="polite"></p>
-                <label class="sort-control" for="sort-order">並び順
-                  <select id="sort-order">
-                    <option value="domain">領域順</option>
-                    <option value="category">評価区分順</option>
-                  </select>
-                </label>
-              </div>
-              <div id="active-filters" class="active-filters" aria-label="適用中の条件"></div>
-              <div id="results" class="results-list"></div>
-              <p id="empty-state" class="empty-state" hidden>条件に合う評価例が見つかりません。キーワードや絞り込み条件を変えてください。</p>
+              <button class="button button-secondary filter-clear" id="clear-filters" type="button">条件をクリア</button>
             </div>
+            <p class="filter-hint">検索すると、条件に合う領域と評価例だけが表示されます。</p>
           </div>
+
+          <div class="results-toolbar">
+            <p id="result-count" class="result-count" aria-live="polite"></p>
+            <div id="active-filters" class="active-filters" aria-label="適用中の条件"></div>
+          </div>
+          <p class="table-hint">表の中で評価例・出典・評価案への追加を確認できます。</p>
+          <div class="matrix-scroll" role="region" aria-label="評価例一覧。画面幅が狭い場合は横にスクロールできます。" tabindex="0">
+            <table class="evaluation-matrix">
+              <thead>
+                <tr>
+                  <th scope="col" class="domain-heading">事業領域</th>
+                  <th scope="col"><span class="category-badge category-structure">ストラクチャー</span><span class="column-help">人員・予算・設備・連携体制</span></th>
+                  <th scope="col"><span class="category-badge category-process">プロセス</span><span class="column-help">対象把握から支援までの進め方</span></th>
+                  <th scope="col"><span class="category-badge category-output">アウトプット</span><span class="column-help">実施量・対象者への到達</span></th>
+                  <th scope="col"><span class="category-badge category-outcome">アウトカム</span><span class="column-help">意識・行動・健康状態等の変化</span></th>
+                </tr>
+              </thead>
+              <tbody id="result-rows"></tbody>
+            </table>
+          </div>
+          <p id="empty-state" class="empty-state" hidden>条件に合う評価例が見つかりません。キーワードや絞り込み条件を変えてください。</p>
         </section>
 
         <section id="my-plan" class="plan-section" aria-labelledby="plan-title">
           <div class="section-heading">
             <p class="eyebrow">MY EVALUATION PLAN</p>
             <h2 id="plan-title">自分の事業評価案</h2>
-            <p>検索した例を追加し、担当事業に合わせて評価方法を書き留めます。入力内容はこのブラウザーに保存されます。</p>
+            <p>一覧の例を選ぶか、自分で指標名を入力して評価案を作成します。入力内容はこのブラウザーに保存されます。</p>
           </div>
+
+          <div class="custom-entry">
+            <div class="custom-entry-copy">
+              <h3>自分の指標を追加</h3>
+              <p>公的資料の例にない指標や、担当事業に合わせて考えた指標も登録できます。</p>
+            </div>
+            <button class="button button-primary" id="toggle-custom-form" type="button" aria-expanded="false" aria-controls="custom-form">指標名を入力する</button>
+          </div>
+          <form id="custom-form" class="custom-form" hidden>
+            <div class="custom-fields">
+              <label>自分の指標名 <span class="required-label">必須</span>
+                <input id="custom-indicator" name="indicatorName" type="text" required maxlength="200" placeholder="例：産後1か月までに相談先を利用できた人の割合">
+              </label>
+              <label>事業領域・担当場面
+                <input name="domain" type="text" list="domain-options" maxlength="120" placeholder="例：妊娠期・出産・産後の支援">
+                <datalist id="domain-options"></datalist>
+              </label>
+              <label>評価区分
+                <select name="category" required>
+                  <option value="ストラクチャー">ストラクチャー</option>
+                  <option value="プロセス">プロセス</option>
+                  <option value="アウトプット">アウトプット</option>
+                  <option value="アウトカム">アウトカム</option>
+                </select>
+              </label>
+            </div>
+            <div class="form-actions">
+              <button class="button button-primary" type="submit">評価案に追加</button>
+              <button class="button button-secondary" id="cancel-custom-form" type="button">閉じる</button>
+            </div>
+            <p class="form-note">自分で作成した指標は「自作」と表示されます。公的資料の出典は自動では付きません。</p>
+          </form>
+
           <div class="plan-toolbar">
-            <p id="plan-count" aria-live="polite">まだ評価例が選ばれていません。</p>
+            <p id="plan-count" aria-live="polite">評価案はまだありません。</p>
             <div class="button-row">
               <button class="button button-secondary" id="export-csv" type="button" disabled>CSVで保存</button>
               <button class="button button-quiet" id="clear-plan" type="button" disabled>一覧を空にする</button>
@@ -114,12 +151,13 @@
         <section id="about" class="about-section" aria-labelledby="about-title">
           <div class="section-heading">
             <p class="eyebrow">HOW TO USE</p>
-            <h2 id="about-title">例を、自分の事業に合わせて具体化する</h2>
+            <h2 id="about-title">評価を次の改善につなげる</h2>
+            <p>評価区分ごとの実施状況を確かめ、分かったことを次の計画に反映します。</p>
           </div>
           <ol class="steps-list">
-            <li><span>1</span><div><h3>評価例を選ぶ</h3><p>事業領域と評価区分から、確認したい内容に近い例を探します。</p></div></li>
-            <li><span>2</span><div><h3>測り方を決める</h3><p>対象・期間、指標の定義、必要に応じて分子と分母、データ源、評価時期を決めます。</p></div></li>
-            <li><span>3</span><div><h3>結果を次の計画につなげる</h3><p>実施量だけでなく、対象者に届いたか、期待した変化があったかを確認し、次に続けること・変えることを整理します。</p></div></li>
+            <li><div><h3>例を選ぶ・指標を考える</h3><p>公的資料の例を参考にするか、自分の事業で確かめたい指標を入力します。</p></div></li>
+            <li><div><h3>測り方を決める</h3><p>対象・期間、指標の定義、分子・分母、データ源・時期を整理します。</p></div></li>
+            <li><div><h3>結果を次の計画へ</h3><p>目標と実績を比べ、結果の理由を考えて、続けること・変えることを記録します。</p></div></li>
           </ol>
           <div class="definition-grid">
             <article><h3>ストラクチャー</h3><p>事業を行う人員、予算、設備、制度、連携体制</p></article>
