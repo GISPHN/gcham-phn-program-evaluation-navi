@@ -130,6 +130,30 @@
                   <option value="アウトカム">アウトカム</option>
                 </select>
               </label>
+              <label>対象・期間
+                <input name="targetPeriod" type="text" maxlength="200" placeholder="例：今年度の産後訪問対象家庭">
+              </label>
+              <label>指標の定義
+                <input name="definition" type="text" maxlength="300" placeholder="何を、どのように数えるか">
+              </label>
+              <label>分子・分母／数え方
+                <input name="numeratorDenominator" type="text" maxlength="300" placeholder="割合の場合は分子と分母">
+              </label>
+              <label>データ源・評価時期
+                <input name="dataAndTiming" type="text" maxlength="300" placeholder="記録、アンケート、評価時期">
+              </label>
+              <label>目標値
+                <input name="targetValue" type="text" maxlength="200" placeholder="例：対象者の80％">
+              </label>
+              <label>実績
+                <input name="actualValue" type="text" maxlength="200" placeholder="例：対象者の62％">
+              </label>
+              <label>結果から分かったこと
+                <textarea name="interpretation" rows="3" maxlength="1000" placeholder="目標との差や、その背景として考えられること"></textarea>
+              </label>
+              <label>次に行う改善
+                <textarea name="nextAction" rows="3" maxlength="1000" placeholder="続けること、見直すこと、次に確認すること"></textarea>
+              </label>
             </div>
             <div class="form-actions">
               <button class="button button-primary" type="submit">評価案に追加</button>
