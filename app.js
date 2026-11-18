@@ -21,18 +21,68 @@ const clearPlanButton = document.querySelector("#clear-plan");
 const customForm = document.querySelector("#custom-form");
 const customIndicatorInput = document.querySelector("#custom-indicator");
 const customFormToggle = document.querySelector("#toggle-custom-form");
-const domains = [...new Set(evaluationExamples.map((item) => item.domain))];
+const domainGroups = [
+  {
+    label: "母子保健",
+    domains: [
+      "妊娠期・出産・産後の支援",
+      "乳幼児の健康診査・発達・養育支援",
+      "学童期・思春期・学校との連携"
+    ]
+  },
+  {
+    label: "成人保健",
+    domains: [
+      "成人の健康づくり・生活習慣改善",
+      "特定健診・特定保健指導",
+      "糖尿病・高血圧等の重症化予防",
+      "がん予防・検診・療養支援",
+      "歯・口腔の健康",
+      "こころの健康・精神保健・自殺対策",
+      "生活困窮・被保護者の健康支援",
+      "働く世代・地域職域連携",
+      "地域の健康づくり環境・健康格差"
+    ]
+  },
+  {
+    label: "高齢者保健",
+    domains: [
+      "高齢者の保健事業・フレイル予防",
+      "介護予防・通いの場・地域づくり"
+    ]
+  },
+  {
+    label: "障害保健",
+    domains: ["障害・医療的ケア・在宅療養"]
+  },
+  {
+    label: "健康危機管理（災害）",
+    domains: ["災害時の保健活動・健康危機管理"]
+  },
+  {
+    label: "健康危機管理（感染症）",
+    domains: ["感染症・予防接種・結核・性感染症"]
+  }
+];
+const publishedDomains = new Set(evaluationExamples.map((item) => item.domain));
+domainGroups.forEach((group) => {
+  group.domains = group.domains.filter((domain) => publishedDomains.has(domain));
+  if (!group.domains.length) return;
+  const optionGroup = document.createElement("optgroup");
+  optionGroup.label = group.label;
+  group.domains.forEach((domain) => {
+    const option = document.createElement("option");
+    option.value = domain;
+    option.textContent = domain;
+    optionGroup.append(option);
 
-domains.forEach((domain) => {
-  const option = document.createElement("option");
-  option.value = domain;
-  option.textContent = domain;
-  domainFilter.append(option);
-
-  const suggestion = document.createElement("option");
-  suggestion.value = domain;
-  document.querySelector("#domain-options").append(suggestion);
+    const suggestion = document.createElement("option");
+    suggestion.value = domain;
+    document.querySelector("#domain-options").append(suggestion);
+  });
+  domainFilter.append(optionGroup);
 });
+const domains = domainGroups.flatMap((group) => group.domains);
 
 function escapeHtml(value) {
   return String(value ?? "").replace(/[&<>"']/g, (char) => ({
@@ -125,11 +175,19 @@ function renderMatrix() {
     return true;
   });
 
-  const orderedDomains = domains.filter((domain) => filtered.some((item) => item.domain === domain));
-  const rows = orderedDomains.map((domain) => {
-    const examples = new Map(filtered.filter((item) => item.domain === domain).map((item) => [item.category, item]));
-    return '<tr><th scope="row" class="domain-cell">' + escapeHtml(domain) + '</th>' +
-      categoryOrder.map((category) => exampleCell(examples.get(category), category)).join("") + '</tr>';
+  const visibleGroups = domainGroups.map((group) => ({
+    label: group.label,
+    domains: group.domains.filter((domain) => filtered.some((item) => item.domain === domain))
+  })).filter((group) => group.domains.length > 0);
+  const orderedDomains = visibleGroups.flatMap((group) => group.domains);
+  const rows = visibleGroups.map((group) => {
+    const heading = '<tr class="domain-group-row"><th scope="row" colspan="5">' + escapeHtml(group.label) + '</th></tr>';
+    const domainRows = group.domains.map((domain) => {
+      const examples = new Map(filtered.filter((item) => item.domain === domain).map((item) => [item.category, item]));
+      return '<tr><th scope="row" class="domain-cell">' + escapeHtml(domain) + '</th>' +
+        categoryOrder.map((category) => exampleCell(examples.get(category), category)).join("") + '</tr>';
+    }).join("");
+    return heading + domainRows;
   }).join("");
 
   resultCount.textContent = filtered.length + "件の評価例（" + orderedDomains.length + "領域）";
