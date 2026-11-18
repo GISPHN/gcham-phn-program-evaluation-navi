@@ -123,7 +123,7 @@ input::placeholder, textarea::placeholder { color: #66717c; opacity: 1; }
 .custom-form { margin-top: .7rem; padding: 1rem 1.1rem; background: white; border: 1px solid var(--line); border-radius: 6px; }
 .custom-fields { display: grid; grid-template-columns: minmax(280px, 2fr) minmax(220px, 1.2fr) minmax(190px, 1fr); gap: .8rem; }
 .custom-fields label, .plan-fields label { display: block; font-size: .85rem; font-weight: 700; }
-.custom-fields input, .custom-fields select { display: block; margin-top: .3rem; font-weight: 400; }
+.custom-fields input, .custom-fields select, .custom-fields textarea { display: block; margin-top: .3rem; font-weight: 400; }
 .required-label { display: inline-block; margin-left: .3rem; padding: 0 .35rem; border-radius: 2px; background: #fce8e6; color: #8b1c1c; font-size: .74rem; }
 .form-actions { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .85rem; }
 .form-note { margin: .65rem 0 0; color: var(--muted); font-size: .83rem; }
