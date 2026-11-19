@@ -21,6 +21,7 @@ const clearPlanButton = document.querySelector("#clear-plan");
 const customForm = document.querySelector("#custom-form");
 const customIndicatorInput = document.querySelector("#custom-indicator");
 const customFormToggle = document.querySelector("#toggle-custom-form");
+const sourceList = document.querySelector("#source-index-list");
 const domainGroups = [
   {
     label: "母子保健",
@@ -135,6 +136,14 @@ function sourceDetails(item) {
     '" target="_blank" rel="noopener noreferrer">公的資料を開く</a></div>'
   ).join("");
   return '<details class="matrix-source-details"><summary>資料名・該当箇所</summary><div class="source-list">' + sources + '</div></details>';
+}
+
+function renderSourceIndex() {
+  sourceList.innerHTML = sourceReferences.map((source) =>
+    '<li><div class="reference-copy"><strong>[' + source.number + '] ' + escapeHtml(source.title) + '</strong>' +
+    '<p>該当箇所：' + escapeHtml(source.locator) + '</p></div>' +
+    '<a href="' + escapeHtml(source.url) + '" target="_blank" rel="noopener noreferrer">公的資料を開く</a></li>'
+  ).join("");
 }
 
 function currentFilters() {
@@ -443,5 +452,6 @@ clearPlanButton.addEventListener("click", () => {
   renderMatrix();
 });
 
+renderSourceIndex();
 renderMatrix();
 renderPlan();
