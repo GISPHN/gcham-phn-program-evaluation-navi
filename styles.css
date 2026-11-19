@@ -210,3 +210,17 @@ input::placeholder, textarea::placeholder { color: #66717c; opacity: 1; }
   .plan-toolbar .button-row { width: 100%; }
   .plan-toolbar .button-row .button { flex: 1 1 auto; }
 }
+
+
+.references-section { padding: 2rem 0; background: white; border-top: 1px solid var(--line); }
+.references-inner { width: min(1440px, calc(100% - 40px)); margin-inline: auto; }
+.references-inner h2 { margin-bottom: .4rem; color: var(--navy-900); font-size: clamp(1.45rem, 2.2vw, 1.85rem); }
+.references-inner > p:not(.eyebrow) { color: var(--muted); }
+.reference-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .65rem 1.1rem; margin: 1rem 0 0; padding-left: 1.75rem; }
+.reference-list li { padding: .75rem .85rem .75rem .35rem; border-bottom: 1px solid var(--line); }
+.reference-copy strong { color: var(--ink); line-height: 1.5; }
+.reference-copy p { margin: .3rem 0 .45rem; color: var(--muted); font-size: .86rem; }
+.reference-list a { font-size: .9rem; font-weight: 700; }
+@media (max-width: 700px) {
+  .reference-list { grid-template-columns: 1fr; }
+}
